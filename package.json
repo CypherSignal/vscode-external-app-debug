@@ -1,7 +1,7 @@
 {
 	"name": "snes-dev",
 	"displayName": "SNES Dev",
-	"version": "0.1",
+	"version": "0.0.1",
 	"publisher": "cyphersignal",
 	"description": "Extension to improve debugging experience of SNES roms and patches",
 	"author": {
