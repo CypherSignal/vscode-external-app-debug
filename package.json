@@ -50,29 +50,29 @@
 	},
 	"main": "./out/extension",
 	"activationEvents": [
-		"onCommand:extension.snes-dev-debug.getRomLocation",
-		"onCommand:extension.snes-dev-debug.getEmulatorLocation"
+		"onDebug",
+		"onCommand:extension.snes-dev-debug.getRomLocation"
 	],
 	"contributes": {
 		"breakpoints": [
 			{
-				"language": "markdown"
+				"language": "assembly"
 			}
 		],
 		"debuggers": [
 			{
 				"type": "snes-dev-debug",
 				"label": "SNES Debug",
-				"program": "C:/Users/Cypher/CodingProjects/SNES/SNES-starterkit/bsnes.exe",
+				"adapterExecutableCommand": "extension.snes-dev-debug.getEmulatorLocation",
 				"configurationAttributes": {
 					"launch": {
 						"required": [
-							"program"
+							"rom"
 						],
 						"properties": {
-							"program": {
+							"rom": {
 								"type": "string",
-								"description": "Absolute path to a text file.",
+								"description": "Absolute path to a ROM file to run in the emulator.",
 								"default": "${workspaceFolder}/${command:GetRomLocation}"
 							},
 							"stopOnEntry": {
@@ -113,6 +113,18 @@
 				"variables": {
 					"GetRomLocation": 		"extension.snes-dev-debug.getRomLocation",
 					"GetEmulatorLocation":	"extension.snes-dev-debug.getEmulatorLocation"
+				}
+			}
+		],
+		"configuration":[
+			{
+				"title": "SNES-Dev",
+				"properties": {
+					"snes-dev-debug.emulatorPath": {
+						"type" : "string",
+						"default": "",
+						"description": "The path of the emulator to launch (either absolute, or resolved via PATH)."
+					}
 				}
 			}
 		]
