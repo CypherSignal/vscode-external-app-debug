@@ -39,6 +39,10 @@ export function activate(context: vscode.ExtensionContext)
 		}
 	}));
 
+	// TODO Forget all of the adapterExecutable stuff. It's a total no-go.
+	// SET UP OUR OWN DEBUGADAPTER and run that through js.
+	// have that relay responses and requests, instead of debugging through vscode.
+
 	// register a configuration provider for 'mock' debug type
 	const provider = new SnesDebugConfigurationProvider();
 	context.subscriptions.push(vscode.debug.registerDebugConfigurationProvider('snes-dev-debug', provider));
