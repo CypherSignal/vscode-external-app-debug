@@ -111,8 +111,7 @@
 					}
 				],
 				"variables": {
-					"getRomLocation": 		"extension.snes-dev-debug.getRomLocation",
-					"getEmulatorLocation":	"extension.snes-dev-debug.getEmulatorLocation"
+					"getRomLocation": 		"extension.snes-dev-debug.getRomLocation"
 				}
 			}
 		],

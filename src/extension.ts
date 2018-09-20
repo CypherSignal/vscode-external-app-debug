@@ -1,10 +1,7 @@
 
 
-`use strict`;
-
 import * as vscode from 'vscode';
 import { WorkspaceFolder, DebugConfiguration, CancellationToken, ProviderResult } from 'vscode';
-//import { DebugAdapterExecutable } from 'vscode';
 
 export function activate(context: vscode.ExtensionContext)
 {
@@ -18,30 +15,16 @@ export function activate(context: vscode.ExtensionContext)
 	context.subscriptions.push(vscode.commands.registerCommand('extension.snes-dev-debug.getEmulatorLocation', _ =>
 	{
 		let emulatorPathConfig = vscode.workspace.getConfiguration('snes-dev-debug');
-		if (!emulatorPathConfig.has('emulatorPath') || emulatorPathConfig.get<string>('emulatorPath') == "")
+		if (!emulatorPathConfig.has('emulatorPath') || emulatorPathConfig.get<string>('emulatorPath') === "")
 		{
-			return vscode.window.showOpenDialog({ canSelectFolders:false, canSelectMany: false, openLabel:'Select'}).then(fileUri =>
-				{
-					if (fileUri && fileUri[0])
-					{
-						vscode.workspace.getConfiguration('snes-dev-debug').update('emulatorPath', fileUri[0].fsPath, false);
-
-						return fileUri[0].fsPath;
-					}
-					return "";
-				}).then(fsPath => {
-					return {command:fsPath, args:[]};
-				});
+			vscode.window.showErrorMessage("snes-dev-debug emulatorPath setting not configured.");
+			return {};
 		}
 		else
 		{
 			return {command:emulatorPathConfig.get<string>('emulatorPath'), args: []};
 		}
 	}));
-
-	// TODO Forget all of the adapterExecutable stuff. It's a total no-go.
-	// SET UP OUR OWN DEBUGADAPTER and run that through js.
-	// have that relay responses and requests, instead of debugging through vscode.
 
 	// register a configuration provider for 'mock' debug type
 	const provider = new SnesDebugConfigurationProvider();
@@ -58,13 +41,6 @@ class SnesDebugConfigurationProvider implements vscode.DebugConfigurationProvide
 	{
 		return config;
 	}
-
-	// TODO: Need to switch over to using this API to provide debugAdapterExecutable once hte appropriate hook is no longer "proposed"
-	// also remove adapterExecutableCommand from package.json
-	// debugAdapterExecutable(folder: WorkspaceFolder | undefined, token?: CancellationToken): ProviderResult<DebugAdapterExecutable>
-	// {
-
-	// }
 
 	dispose() {	}
 }
