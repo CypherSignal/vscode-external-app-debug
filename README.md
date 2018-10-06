@@ -24,3 +24,7 @@ TODO: Set up a service that auto-builds the extension
   * Switch to the debug viewlet and press the gear dropdown.
   * Select the debug environment "Snes Debug".
   * Press `F5` to start debugging.
+
+## Credits
+
+Initial implementation of 65816 TextMarkup language provided via DanielOaks: https://github.com/DanielOaks/65816-Assembly-TMlanguage
