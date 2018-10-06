@@ -26,13 +26,6 @@
 			],
 			"outFiles": [ "${workspaceFolder}/out/**/*.js" ],
 			"internalConsoleOptions": "openOnSessionStart"
-		},
-		{
-			"type": "snes-dev debug",
-			"request": "launch",
-			"name": "SNES Debug",
-			"program": "${workspaceFolder}/${command:AskForProgramName}",
-			"stopOnEntry": true
 		}
 	],
 	"compounds": [
