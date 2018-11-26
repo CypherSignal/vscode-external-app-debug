@@ -1,6 +1,6 @@
 # VS Code Snes-Dev Extension
 
-This is an extension designed to facilitate development of SNES patches and ROMs, by providing syntax highlighting for 65816 assembly, and ease of integration with debug-protocol-aware emulators.
+This is an extension designed to facilitate development of homebrew patches and ROMs, by providing integration with debug-protocol-aware emulators.
 
 ## Using the Snes-dev extension
 
@@ -24,7 +24,3 @@ TODO: Set up a service that auto-builds the extension
   * Switch to the debug viewlet and press the gear dropdown.
   * Select the debug environment "Snes Debug".
   * Press `F5` to start debugging.
-
-## Credits
-
-Initial implementation of 65816 TextMarkup language provided via DanielOaks: https://github.com/DanielOaks/65816-Assembly-TMlanguage
