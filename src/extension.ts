@@ -26,7 +26,7 @@ export function activate(context: vscode.ExtensionContext)
 		}
 	}));
 
-	// register a configuration provider for 'mock' debug type
+	// register a configuration provider for snes-dev-debug
 	const provider = new SnesDebugConfigurationProvider();
 	context.subscriptions.push(vscode.debug.registerDebugConfigurationProvider('snes-dev-debug', provider));
 	context.subscriptions.push(provider);
