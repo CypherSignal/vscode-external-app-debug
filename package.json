@@ -1,6 +1,6 @@
 {
 	"name": "retrorom-debug",
-	"displayName": "RetroROM Dev",
+	"displayName": "RetroROM Debug",
 	"version": "0.0.1",
 	"publisher": "cyphersignal",
 	"description": "Extension to improve debugging experience of ROMs and patches for retr",
