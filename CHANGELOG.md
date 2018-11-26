@@ -1,3 +1,3 @@
-## 0.0
-* No release yet
+## 0.1
+* Initial release, allowing for a user to specify and launch an emulator in question
 

@@ -5,19 +5,19 @@ import { WorkspaceFolder, DebugConfiguration, CancellationToken, ProviderResult 
 
 export function activate(context: vscode.ExtensionContext)
 {
-	context.subscriptions.push(vscode.commands.registerCommand('extension.RetroROM-debug.getRomLocation', config =>
+	context.subscriptions.push(vscode.commands.registerCommand('extension.retrorom-debug.getRomLocation', config =>
 	{
 		return vscode.window.showInputBox({
 			placeHolder: "Specify the name of an assembled ROM file in the workspace folder to execute"
 		});
 	}));
 
-	context.subscriptions.push(vscode.commands.registerCommand('extension.RetroROM-debug.getEmulatorLocation', _ =>
+	context.subscriptions.push(vscode.commands.registerCommand('extension.retrorom-debug.getEmulatorLocation', _ =>
 	{
-		let emulatorPathConfig = vscode.workspace.getConfiguration('RetroROM-debug');
+		let emulatorPathConfig = vscode.workspace.getConfiguration('retrorom-debug');
 		if (!emulatorPathConfig.has('emulatorPath') || emulatorPathConfig.get<string>('emulatorPath') === "")
 		{
-			vscode.window.showErrorMessage("RetroROM-debug emulatorPath setting not configured.");
+			vscode.window.showErrorMessage("retrorom-debug emulatorPath setting not configured.");
 			return {};
 		}
 		else
@@ -26,9 +26,9 @@ export function activate(context: vscode.ExtensionContext)
 		}
 	}));
 
-	// register a configuration provider for RetroROM-debug
+	// register a configuration provider for retrorom-debug
 	const provider = new RetroROMDebugConfigurationProvider();
-	context.subscriptions.push(vscode.debug.registerDebugConfigurationProvider('RetroROM-debug', provider));
+	context.subscriptions.push(vscode.debug.registerDebugConfigurationProvider('retrorom-debug', provider));
 	context.subscriptions.push(provider);
 }
 

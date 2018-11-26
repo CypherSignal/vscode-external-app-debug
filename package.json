@@ -1,5 +1,5 @@
 {
-	"name": "RetroROM-debug",
+	"name": "retrorom-debug",
 	"displayName": "RetroROM Dev",
 	"version": "0.0.1",
 	"publisher": "cyphersignal",
@@ -14,17 +14,17 @@
 	"engines": {
 		"vscode": "^1.18.0"
 	},
-	"icon": "images/RetroROM-debug-icon-256.png",
+	"icon": "images/retrorom-debug-icon-256.png",
 	"categories": [
 		"Debuggers"
 	],
 	"private": true,
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/CypherSignal/vscode-RetroROM-debug.git"
+		"url": "https://github.com/CypherSignal/vscode-retrorom-debug.git"
 	},
 	"bugs": {
-		"url": "https://github.com/CypherSignal/vscode-RetroROM-debug/issues"
+		"url": "https://github.com/CypherSignal/vscode-retrorom-debug/issues"
 	},
 	"scripts": {
 		"prepublish": "tsc -p ./src",
@@ -51,14 +51,14 @@
 	"main": "./out/extension",
 	"activationEvents": [
 		"onDebug",
-		"onCommand:extension.RetroROM-debug.getRomLocation"
+		"onCommand:extension.retrorom-debug.getRomLocation"
 	],
 	"contributes": {
 		"debuggers": [
 			{
-				"type": "RetroROM-debug",
+				"type": "retrorom-debug",
 				"label": "RetroROM Debug",
-				"adapterExecutableCommand": "extension.RetroROM-debug.getEmulatorLocation",
+				"adapterExecutableCommand": "extension.retrorom-debug.getEmulatorLocation",
 				"configurationAttributes": {
 					"launch": {
 						"required": [
@@ -85,7 +85,7 @@
 				},
 				"initialConfigurations": [
 					{
-						"type": "RetroROM-debug",
+						"type": "retrorom-debug",
 						"request": "launch",
 						"name": "Ask for file name",
 						"program": "${workspaceFolder}/${command:getRomLocation}",
@@ -97,7 +97,7 @@
 						"label": "RetroROM Debug: Launch",
 						"description": "Configuration for debugging a ROM in an emulator.",
 						"body": {
-							"type": "RetroROM-debug",
+							"type": "retrorom-debug",
 							"request": "launch",
 							"name": "Ask for file name",
 							"program": "^\"\\${workspaceFolder}/\\${command:getRomLocation}\"",
@@ -106,16 +106,16 @@
 					}
 				],
 				"variables": {
-					"getRomLocation": "extension.RetroROM-debug.getRomLocation"
+					"getRomLocation": "extension.retrorom-debug.getRomLocation"
 				}
 			}
 		],
-		"configuration":[
+		"configuration": [
 			{
-				"title": "RetroROM-debug",
+				"title": "retrorom-debug",
 				"properties": {
-					"RetroROM-debug.emulatorPath": {
-						"type" : "string",
+					"retrorom-debug.emulatorPath": {
+						"type": "string",
 						"default": "",
 						"description": "The path of the emulator to launch (either absolute, or resolved via PATH)."
 					}
