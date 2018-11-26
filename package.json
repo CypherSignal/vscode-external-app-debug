@@ -1,9 +1,9 @@
 {
-	"name": "snes-dev",
-	"displayName": "SNES Dev",
+	"name": "RetroROM-debug",
+	"displayName": "RetroROM Dev",
 	"version": "0.0.1",
 	"publisher": "cyphersignal",
-	"description": "Extension to improve debugging experience of SNES roms and patches",
+	"description": "Extension to improve debugging experience of ROMs and patches for retr",
 	"author": {
 		"name": "Cypher Signal"
 	},
@@ -14,17 +14,17 @@
 	"engines": {
 		"vscode": "^1.18.0"
 	},
-	"icon": "images/snes-dev-icon-256.png",
+	"icon": "images/RetroROM-debug-icon-256.png",
 	"categories": [
 		"Debuggers"
 	],
 	"private": true,
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/CypherSignal/vscode-snes-dev.git"
+		"url": "https://github.com/CypherSignal/vscode-RetroROM-debug.git"
 	},
 	"bugs": {
-		"url": "https://github.com/CypherSignal/vscode-snes-dev/issues"
+		"url": "https://github.com/CypherSignal/vscode-RetroROM-debug/issues"
 	},
 	"scripts": {
 		"prepublish": "tsc -p ./src",
@@ -51,14 +51,14 @@
 	"main": "./out/extension",
 	"activationEvents": [
 		"onDebug",
-		"onCommand:extension.snes-dev-debug.getRomLocation"
+		"onCommand:extension.RetroROM-debug.getRomLocation"
 	],
 	"contributes": {
 		"debuggers": [
 			{
-				"type": "snes-dev-debug",
-				"label": "SNES Debug",
-				"adapterExecutableCommand": "extension.snes-dev-debug.getEmulatorLocation",
+				"type": "RetroROM-debug",
+				"label": "RetroROM Debug",
+				"adapterExecutableCommand": "extension.RetroROM-debug.getEmulatorLocation",
 				"configurationAttributes": {
 					"launch": {
 						"required": [
@@ -85,7 +85,7 @@
 				},
 				"initialConfigurations": [
 					{
-						"type": "snes-dev-debug",
+						"type": "RetroROM-debug",
 						"request": "launch",
 						"name": "Ask for file name",
 						"program": "${workspaceFolder}/${command:getRomLocation}",
@@ -94,10 +94,10 @@
 				],
 				"configurationSnippets": [
 					{
-						"label": "Snes-Dev Debug: Launch",
+						"label": "RetroROM Debug: Launch",
 						"description": "Configuration for debugging a ROM in an emulator.",
 						"body": {
-							"type": "snes-dev-debug",
+							"type": "RetroROM-debug",
 							"request": "launch",
 							"name": "Ask for file name",
 							"program": "^\"\\${workspaceFolder}/\\${command:getRomLocation}\"",
@@ -106,15 +106,15 @@
 					}
 				],
 				"variables": {
-					"getRomLocation": "extension.snes-dev-debug.getRomLocation"
+					"getRomLocation": "extension.RetroROM-debug.getRomLocation"
 				}
 			}
 		],
 		"configuration":[
 			{
-				"title": "SNES-Dev",
+				"title": "RetroROM-debug",
 				"properties": {
-					"snes-dev-debug.emulatorPath": {
+					"RetroROM-debug.emulatorPath": {
 						"type" : "string",
 						"default": "",
 						"description": "The path of the emulator to launch (either absolute, or resolved via PATH)."
