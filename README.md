@@ -5,6 +5,7 @@ This is an extension designed to facilitate development of homebrew patches and 
 ## Using the retrorom-debug extension
 
 * Install the **retrorom-debug** extension in VS Code.
+
 TODO: will need a build step (should this only be discussed?)
 * Switch to the debug viewlet and press the gear dropdown.
 * Select the debug environment "ROM Debug".
