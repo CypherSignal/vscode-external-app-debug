@@ -3,7 +3,7 @@
 	"displayName": "RetroROM Debug",
 	"version": "0.0.1",
 	"publisher": "cyphersignal",
-	"description": "Extension to improve debugging experience of ROMs and patches for retr",
+	"description": "This is an extension designed to facilitate development of homebrew patches and ROMs for \"retro\" game hardware, by providing integration with debug-protocol-aware emulators of such platforms.",
 	"author": {
 		"name": "Cypher Signal"
 	},
@@ -112,7 +112,7 @@
 		],
 		"configuration": [
 			{
-				"title": "retrorom-debug",
+				"title": "RetroROM Debug",
 				"properties": {
 					"retrorom-debug.emulatorPath": {
 						"type": "string",
