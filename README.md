@@ -11,11 +11,7 @@ This is an extension designed to facilitate development of homebrew patches and 
 * Optionally, update the "program" part of the configuration to point to your generated ROM file
 * Press the green 'play' button to start debugging
 
-TODO: description of what you can do from here. Set breakpoints, step, run. What else?
-
 ## Build and Run
-
-TODO: Set up a service that auto-builds the extension
 
 * Clone the project
 * Open the project folder in VS Code.
