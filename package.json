@@ -54,11 +54,6 @@
 		"onCommand:extension.snes-dev-debug.getRomLocation"
 	],
 	"contributes": {
-		"breakpoints": [
-			{
-				"language": "wla-65816-assembly"
-			}
-		],
 		"debuggers": [
 			{
 				"type": "snes-dev-debug",
@@ -111,7 +106,7 @@
 					}
 				],
 				"variables": {
-					"getRomLocation": 		"extension.snes-dev-debug.getRomLocation"
+					"getRomLocation": "extension.snes-dev-debug.getRomLocation"
 				}
 			}
 		],
@@ -125,26 +120,6 @@
 						"description": "The path of the emulator to launch (either absolute, or resolved via PATH)."
 					}
 				}
-			}
-		],
-		"languages": [
-			{
-				"id": "wla-65816-assembly",
-				"aliases": [
-					"WLA 65816 Assembly"
-				],
-				"extensions": [
-					".asm",
-					".inc"
-				],
-				"configuration": "./language-configuration.json"
-			}
-		],
-		"grammars": [
-			{
-				"language": "wla-65816-assembly",
-				"scopeName": "source.wla-65816",
-				"path": "./syntaxes/wla-65816.tmLanguage"
 			}
 		]
 	}
