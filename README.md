@@ -20,7 +20,8 @@ TODO: Set up a service that auto-builds the extension
 * Open the project folder in VS Code.
 * Press `F5` to build and launch RetroROM-debug in another VS Code window. In that window:
   * Open a folder containing a workspace with assembly for a ROM
-  * Switch to the debug viewlet and press the gear dropdown.
-  * Select the debug environment "RetroROM Debug".
-  * Press `F5` to start debugging.
+  * Switch to the debug viewlet, and click Add Configuration (or the Configure gear icon)
+  * Select the debug environment "RetroROM Debug"
+  * Optionally, update the "program" part of the configuration to point to your generated ROM file
+  * Press `F5` to start debugging
 

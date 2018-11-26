@@ -73,7 +73,7 @@
 							"stopOnEntry": {
 								"type": "boolean",
 								"description": "Automatically stop after launch.",
-								"default": true
+								"default": false
 							},
 							"trace": {
 								"type": "boolean",
@@ -89,7 +89,7 @@
 						"request": "launch",
 						"name": "Ask for file name",
 						"program": "${workspaceFolder}/${command:getRomLocation}",
-						"stopOnEntry": true
+						"stopOnEntry": false
 					}
 				],
 				"configurationSnippets": [
@@ -101,7 +101,7 @@
 							"request": "launch",
 							"name": "Ask for file name",
 							"program": "^\"\\${workspaceFolder}/\\${command:getRomLocation}\"",
-							"stopOnEntry": true
+							"stopOnEntry": false
 						}
 					}
 				],
