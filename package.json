@@ -58,7 +58,6 @@
 			{
 				"type": "retrorom-debug",
 				"label": "RetroROM Debug",
-				"adapterExecutableCommand": "extension.retrorom-debug.getEmulatorLocation",
 				"configurationAttributes": {
 					"launch": {
 						"required": [
