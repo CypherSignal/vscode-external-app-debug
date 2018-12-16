@@ -27,7 +27,7 @@
 		"url": "https://github.com/CypherSignal/vscode-retrorom-debug/issues"
 	},
 	"scripts": {
-		"prepublish": "tsc -p ./src",
+		"prepublishOnly": "tsc -p ./src",
 		"compile": "tsc -p ./src",
 		"tslint": "tslint ./src/**/*.ts",
 		"watch": "tsc -w -p ./src",
