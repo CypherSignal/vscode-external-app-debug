@@ -79,7 +79,7 @@ async function getListeningProcesses() : Promise<PortItem[]> {
 						const content = JSON.parse(lines[2]);
 						if (content.command === "retrorompreinit") {
 							if (content.body !== undefined) {
-								resolve(new PortItem(i, content.body.pid, content.body.title || `Port: ${i}`, content.body.description));
+								resolve(new PortItem(i, content.body.pid, (content.body.title || `Port: ${i}`) + ` | PID: ${content.body.pid}`, content.body.description));
 							}
 							else {
 								resolve(new PortItem(i));
