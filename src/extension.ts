@@ -39,8 +39,6 @@ function getEmulatorLocation() : string {
 			(vscode.window.showErrorMessage("retrorom-debug emulatorPath setting not configured."), "");
 }
 
-// dcrooks-todo more configuration of the target port range
-
 // generate an array of promises that each (attempt) to establish a connection on the given port,
 // and once connection is made, send down a custom "debug-adapter"-style json request
 // then wait for the response to fill out the data
@@ -63,7 +61,7 @@ function getEmulatorLocation() : string {
 // 	}
 async function getListeningProcesses() : Promise<PortItem[]> {
 	let portscanResults = new Array<Promise<PortItem | undefined>>();
-	for (let i = 5422; i < 5422 + 50; i++) {
+	for (let i = 5420; i < 5450; i++) {
 		portscanResults.push(new Promise((resolve, reject) => {
 			let socket = net.createConnection({port : i}, () => {
 					// after creating the connection, send a "preinit" request message
@@ -111,7 +109,7 @@ async function getListenerPortForProcess(pid:number) : Promise<PortItem | undefi
 			return resultPromise;
 		}
 		else { // do a short wait to we don't spam constantly
-			await new Promise( _ => setTimeout(_, 50));
+			await new Promise( _ => setTimeout(_, 100));
 		}
 	}
 	return undefined;
@@ -135,27 +133,30 @@ class RetroROMDebugConfigurationProvider implements vscode.DebugConfigurationPro
 class RetroROMDebugAdapterDescriptorFactory implements vscode.DebugAdapterDescriptorFactory  {
 
 	createDebugAdapterDescriptor(session: vscode.DebugSession, executable: vscode.DebugAdapterExecutable | undefined): vscode.ProviderResult<vscode.DebugAdapterDescriptor> {
+		let portPromise:Thenable<PortItem | undefined>;
+
 		if (session.configuration.request === "launch") {
 			// launch the process to attach to
 			const process = child_process.spawn(getEmulatorLocation());
 
 			// start portscan to find the process to connect to, and do so
-			return getListenerPortForProcess(process.pid).then(result => {
-				if (result) {
-					return new vscode.DebugAdapterServer(result.port);
-				}
-				return undefined;
-			});
+			portPromise = getListenerPortForProcess(process.pid)
 		}
 		else if (session.configuration.request === "attach") {
 			// do a portscan and use that to populate a picker
-			return vscode.window.showQuickPick(getListeningProcesses()).then(result => {
-				if (result) {
-					return new vscode.DebugAdapterServer(result.port);
-				}
-				return undefined;
-			});
+			portPromise = vscode.window.showQuickPick(getListeningProcesses());
 		}
+		else {
+			portPromise = new Promise(() => { return undefined; });
+		}
+
+		// convert the promised PortItem into a debugAdapterServer
+		return portPromise.then(result => {
+			if (result) {
+				return new vscode.DebugAdapterServer(result.port);
+			}
+			return undefined;
+		});
 	}
 
 	dispose() {	}
