@@ -5,10 +5,10 @@ This is an extension designed to facilitate development of homebrew patches and 
 ## Using the retrorom-debug extension
 
 * Install the **retrorom-debug** extension in VS Code
-* Go into VS Code's Settings, and under "Extensions > RetroROM Debug" set the emulator you want to launch your ROM with
-* Switch to the Debug viewlet, click the dropdown to "Add Configuration..." and select "RetroROM Debug"
-* Optionally, update the "program" part of the configuration to point to your generated ROM file
-* Press the green 'play' button to start debugging
+* In VS Code's Preferences, under "Extensions > RetroROM Debug", set the emulator you want to launch your ROM with
+* In the Debug viewlet, click the dropdown to "Add Configuration..." and select "RetroROM Debug" to create a debug configuration in your launch.json
+	* Note that `launch` and `attach` request types are available in the extension
+	* Other settings such as `stopAtEntry` and `program` must be acknowledged by the target emulator
 
 ## Information for emulator authors
 
