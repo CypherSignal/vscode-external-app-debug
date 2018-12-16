@@ -10,18 +10,6 @@ This is an extension designed to facilitate development of homebrew patches and 
 * Optionally, update the "program" part of the configuration to point to your generated ROM file
 * Press the green 'play' button to start debugging
 
-## Build and run
-
-* Clone the project
-* Open the project folder in VS Code
-* Run `npm install` in the terminal
-* Press `F5` to build and launch retrorom-debug in another VS Code window. In that window:
-  * Open a folder containing a workspace with assembly for a ROM
-  * Switch to the debug viewlet, and click Add Configuration (or the Configure gear icon)
-  * Select the debug environment "RetroROM Debug"
-  * Optionally, update the "program" part of the configuration to point to your generated ROM file
-  * Press `F5` to start debugging
-
 ## Information for emulator authors
 
 If you are the maintainer of an emulator and you want it to work with this extension as a debug target, note the following:
@@ -48,3 +36,10 @@ export interface RetroRomPreInitResponse extends Response {
 ```
 
 Aside from that, all interactions with the Debug Adapter Protocol are unchanged. Information on this protocol can be found at https://microsoft.github.io/debug-adapter-protocol/overview.
+
+
+## Build and run the extension yourself
+
+* Clone the project, and open the project folder in VS Code
+* Run `npm install` in the terminal
+* Run the "Extension" debug configuration
