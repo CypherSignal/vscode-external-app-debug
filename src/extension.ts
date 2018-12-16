@@ -14,6 +14,11 @@ export function activate(context: vscode.ExtensionContext) {
 	const provider = new RetroROMDebugConfigurationProvider();
 	context.subscriptions.push(vscode.debug.registerDebugConfigurationProvider('retrorom-debug', provider));
 	context.subscriptions.push(provider);
+
+	// register an adapter descriptor for retrorom-debug
+	const factory = new RetroROMDebugAdapterDescriptorFactory();
+	context.subscriptions.push(vscode.debug.registerDebugAdapterDescriptorFactory('retrorom-debug', factory));
+	context.subscriptions.push(factory);
 }
 
 class PortItem implements vscode.QuickPickItem {
@@ -35,7 +40,7 @@ function getEmulatorLocation() : string {
 }
 
 // dcrooks-todo more configuration of the target port range
-// dcrooks-todo update readme with this data
+
 // generate an array of promises that each (attempt) to establish a connection on the given port,
 // and once connection is made, send down a custom "debug-adapter"-style json request
 // then wait for the response to fill out the data
@@ -115,25 +120,38 @@ async function getListenerPortForProcess(pid:number) : Promise<PortItem | undefi
 class RetroROMDebugConfigurationProvider implements vscode.DebugConfigurationProvider {
 
 	// Massage a debug configuration just before a debug session is being launched,
-	// e.g. add all missing attributes to the debug configuration.
+	// e.g. throw out the program name if we're doing an attach
 	resolveDebugConfiguration(folder: WorkspaceFolder | undefined, config: DebugConfiguration, token?: CancellationToken): ProviderResult<DebugConfiguration> {
-		if (config.request === "launch") {
-			// kick process
-			const emulatorProc = child_process.spawn(getEmulatorLocation());
+		if (config.request === "attach") {
+			config.program = "";
+		}
+		return config;
+	}
+
+	dispose() {	}
+}
+
+// factory that generates the DebugAdapterServer after finalizing the debug configuration
+class RetroROMDebugAdapterDescriptorFactory implements vscode.DebugAdapterDescriptorFactory  {
+
+	createDebugAdapterDescriptor(session: vscode.DebugSession, executable: vscode.DebugAdapterExecutable | undefined): vscode.ProviderResult<vscode.DebugAdapterDescriptor> {
+		if (session.configuration.request === "launch") {
+			// launch the process to attach to
+			const process = child_process.spawn(getEmulatorLocation());
+
 			// start portscan to find the process to connect to, and do so
-			return getListenerPortForProcess(emulatorProc.pid).then(result => {
+			return getListenerPortForProcess(process.pid).then(result => {
 				if (result) {
-					config.debugServer = result.port;
-					return config;
+					return new vscode.DebugAdapterServer(result.port);
 				}
 				return undefined;
 			});
 		}
-		else if (config.request === "attach") {
-			return vscode.window.showQuickPick(getListeningProcesses().then(items => items.filter(item => item.port !== 0))).then(result => {
+		else if (session.configuration.request === "attach") {
+			// do a portscan and use that to populate a picker
+			return vscode.window.showQuickPick(getListeningProcesses()).then(result => {
 				if (result) {
-					config.debugServer = result.port;
-					return config;
+					return new vscode.DebugAdapterServer(result.port);
 				}
 				return undefined;
 			});

@@ -47,4 +47,4 @@ export interface RetroRomPreInitResponse extends Response {
 }
 ```
 
-Aside from that, all interactions with the Debug Adapter Protocol are unchanged. Information on this protocol can be found at https://microsoft.github.io/debug-adapter-protocol/overview. In your own development, if setting up Servers and Sockets is particularly onerous, it might be recommended to start with having your program listen on stdin/stdout. The extension can be modified by removing the behaviour of `ResolveDebugConfiguration` that sets `config.debugServer`, and by adding `"adapterExecutableCommand": "extension.retrorom-debug.getEmulatorLocation"` as a feature of the `debuggers` contribution in the `package.json` file.
+Aside from that, all interactions with the Debug Adapter Protocol are unchanged. Information on this protocol can be found at https://microsoft.github.io/debug-adapter-protocol/overview.
