@@ -12,6 +12,8 @@ This is an extension designed to facilitate development of homebrew patches and 
 
 From there, VS Code should launch the emulator you provided, and establish a connection with it. Functionality from that point forward is handled by the emulator, including systems such as loading of symbols, controlling execution, fetching runtime state, and so on.
 
+Currently the only supported emulator (itself a WIP) is available at https://github.com/CypherSignal/bsnes-plus/tree/vscode-newdbg
+
 ## Information for emulator authors
 
 If you are the maintainer of an emulator and you want it to work with this extension as a debug target, note the following:

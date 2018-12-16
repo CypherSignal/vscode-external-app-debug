@@ -75,8 +75,6 @@ async function getListeningProcesses() : Promise<PortItem[]> {
 					socket.write(`Content-Length: ${Buffer.byteLength(requestJson, 'utf8')}\r\n\r\n${requestJson}`, 'utf8');
 				})
 				.on('data', (data: Buffer) => {
-					// dcrooks-todo this handling sucks.
-					// We should at least pretend to ack the "content-length" in the response...
 					const lines = data.toString('utf8').split(/\r?\n/);
 					if (lines.length === 4) {
 						const content = JSON.parse(lines[2]);
