@@ -1,4 +1,4 @@
-## 0.1.1
+## 0.2.0
 * Fix issue with socket cleanup during launch/attach not being thorough enough.
 
 ## 0.1.0
