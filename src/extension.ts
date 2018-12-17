@@ -85,13 +85,15 @@ async function getListeningProcesses() : Promise<PortItem[]> {
 							else {
 								resolve(new PortItem(i));
 							}
+							socket.end();
 							return;
 						}
 					}
 					resolve(undefined);
+					socket.end();
 				})
-				.on('error', () => { resolve(undefined); })
-				.on('timeout', () => { resolve(undefined); })
+				.on('error', () => { resolve(undefined); socket.destroy(); })
+				.on('timeout', () => { resolve(undefined); socket.destroy(); })
 				.setTimeout(150);
 		}));
 	}
