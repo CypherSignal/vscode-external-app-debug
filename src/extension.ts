@@ -4,20 +4,20 @@ import * as vscode from 'vscode';
 import { WorkspaceFolder, DebugConfiguration, CancellationToken, ProviderResult } from 'vscode';
 
 export function activate(context: vscode.ExtensionContext) {
-	context.subscriptions.push(vscode.commands.registerCommand('extension.retrorom-debug.getRomLocation', config => {
+	context.subscriptions.push(vscode.commands.registerCommand('extension.external-app-debug.getFileLocation', config => {
 		return vscode.window.showInputBox({
-			placeHolder: "Specify the name of an assembled ROM file in the workspace folder to execute"
+			placeHolder: "Specify the name of an file in the workspace folder for the application to execute"
 		});
 	}));
 
-	// register a configuration provider for retrorom-debug
-	const provider = new RetroROMDebugConfigurationProvider();
-	context.subscriptions.push(vscode.debug.registerDebugConfigurationProvider('retrorom-debug', provider));
+	// register a configuration provider for external-app-debug
+	const provider = new ExternalAppDebugConfigurationProvider();
+	context.subscriptions.push(vscode.debug.registerDebugConfigurationProvider('external-app-debug', provider));
 	context.subscriptions.push(provider);
 
-	// register an adapter descriptor for retrorom-debug
-	const factory = new RetroROMDebugAdapterDescriptorFactory();
-	context.subscriptions.push(vscode.debug.registerDebugAdapterDescriptorFactory('retrorom-debug', factory));
+	// register an adapter descriptor for external-app-debug
+	const factory = new ExternalAppDebugAdapterDescriptorFactory();
+	context.subscriptions.push(vscode.debug.registerDebugAdapterDescriptorFactory('external-app-debug', factory));
 	context.subscriptions.push(factory);
 }
 
@@ -34,24 +34,24 @@ class PortItem implements vscode.QuickPickItem {
 	}
 }
 
-function getEmulatorLocation() : string {
-	return vscode.workspace.getConfiguration('retrorom-debug').get<string>('emulatorPath') ||
-			(vscode.window.showErrorMessage("retrorom-debug emulatorPath setting not configured."), "");
+function getExternalAppLocation() : string {
+	return vscode.workspace.getConfiguration('external-app-debug').get<string>('externalAppPath') ||
+			(vscode.window.showErrorMessage("external-app-debug externalAppPath setting not configured."), "");
 }
 
 // generate an array of promises that each (attempt) to establish a connection on the given port,
 // and once connection is made, send down a custom "debug-adapter"-style json request
 // then wait for the response to fill out the data
 //
-// Sample version of the RetroRomPreInit Request:
+// Sample version of the ExternalAppDebugPreInit Request:
 //
-// export interface RetroRomPreInitRequest extends Request {
-// 	// command: 'retrorompreinit';
+// export interface ExternalAppDebugPreInitRequest extends Request {
+// 	// command: 'external-apppreinit';
 // }
 //
-// Sample version of the RetroRomPreInit response that should be filled out by the target executable
+// Sample version of the ExternalAppDebugPreInit response that should be filled out by the target executable
 //
-// 	export interface RetroRomPreInitResponse extends Response {
+// 	export interface ExternalAppDebugPreInitResponse extends Response {
 // 		// Information for this debug adapter
 // 		body: {
 // 			pid: Number; // The process ID of the executable
@@ -67,7 +67,7 @@ async function getListeningProcesses() : Promise<PortItem[]> {
 					// after creating the connection, send a "preinit" request message
 					// and get the response to fill out the PortItem data
 					const request: any = {
-						command: "retrorompreinit",
+						command: "external-apppreinit",
 						type: "request",
 						seq: 0
 					};
@@ -78,7 +78,7 @@ async function getListeningProcesses() : Promise<PortItem[]> {
 					const lines = data.toString('utf8').split(/\r?\n/);
 					if (lines.length === 4) {
 						const content = JSON.parse(lines[2]);
-						if (content.command === "retrorompreinit") {
+						if (content.command === "external-apppreinit") {
 							if (content.body !== undefined) {
 								resolve(new PortItem(i, content.body.pid, (content.body.title || `Port: ${i}`) + ` | PID: ${content.body.pid}`, content.body.description));
 							}
@@ -115,7 +115,7 @@ async function getListenerPortForProcess(pid:number) : Promise<PortItem | undefi
 	return undefined;
 }
 
-class RetroROMDebugConfigurationProvider implements vscode.DebugConfigurationProvider {
+class ExternalAppDebugConfigurationProvider implements vscode.DebugConfigurationProvider {
 
 	// Massage a debug configuration just before a debug session is being launched,
 	// e.g. throw out the program name if we're doing an attach
@@ -130,14 +130,14 @@ class RetroROMDebugConfigurationProvider implements vscode.DebugConfigurationPro
 }
 
 // factory that generates the DebugAdapterServer after finalizing the debug configuration
-class RetroROMDebugAdapterDescriptorFactory implements vscode.DebugAdapterDescriptorFactory  {
+class ExternalAppDebugAdapterDescriptorFactory implements vscode.DebugAdapterDescriptorFactory  {
 
 	createDebugAdapterDescriptor(session: vscode.DebugSession, executable: vscode.DebugAdapterExecutable | undefined): vscode.ProviderResult<vscode.DebugAdapterDescriptor> {
 		let portPromise:Thenable<PortItem | undefined>;
 
 		if (session.configuration.request === "launch") {
 			// launch the process to attach to
-			const process = child_process.spawn(getEmulatorLocation());
+			const process = child_process.spawn(getExternalAppLocation());
 
 			// start portscan to find the process to connect to, and do so
 			portPromise = getListenerPortForProcess(process.pid)

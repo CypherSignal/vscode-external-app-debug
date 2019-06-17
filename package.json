@@ -1,9 +1,9 @@
 {
-	"name": "retrorom-debug",
-	"displayName": "RetroROM Debug",
-	"version": "0.2.0",
+	"name": "external-app-debug",
+	"displayName": "External App Debug",
+	"version": "0.3.0",
 	"publisher": "cyphersignal",
-	"description": "This is an extension designed to facilitate development of homebrew patches and ROMs for \"retro\" game hardware, by providing integration with debug-protocol-aware emulators of such platforms.",
+	"description": "This is an extension designed to facilitate development of content that is executed inside of external applications, by providing integration with debug-protocol-aware applications.",
 	"author": {
 		"name": "Cypher Signal"
 	},
@@ -12,19 +12,19 @@
 		"multi-root ready"
 	],
 	"engines": {
-		"vscode": "^1.30.0"
+		"vscode": "^1.35.0"
 	},
-	"icon": "images/retrorom-debug-icon-256.png",
+	"icon": "images/external-app-debug-icon-256.png",
 	"categories": [
 		"Debuggers"
 	],
 	"private": true,
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/CypherSignal/vscode-retrorom-debug.git"
+		"url": "https://github.com/CypherSignal/vscode-external-app-debug.git"
 	},
 	"bugs": {
-		"url": "https://github.com/CypherSignal/vscode-retrorom-debug/issues"
+		"url": "https://github.com/CypherSignal/vscode-external-app-debug/issues"
 	},
 	"scripts": {
 		"prepublishOnly": "tsc -p ./src",
@@ -38,25 +38,25 @@
 	"dependencies": {
 		"await-notify": "1.0.1",
 		"typescript-compiler": "1.4.1-2",
-		"vscode-debugadapter": "1.33.0"
+		"vscode-debugadapter": "1.35.0"
 	},
 	"devDependencies": {
-		"@types/node": "10.12.15",
-		"tslint": "5.11.0",
-		"typescript": "3.2.2",
-		"vsce": "1.53.2",
-		"vscode": "1.1.26"
+		"@types/node": "12.0.8",
+		"tslint": "5.17.0",
+		"typescript": "3.5.2",
+		"vsce": "1.63.0",
+		"vscode": "1.1.34"
 	},
 	"main": "./out/extension",
 	"activationEvents": [
 		"onDebug",
-		"onCommand:extension.retrorom-debug.getRomLocation"
+		"onCommand:extension.external-app-debug.getFileLocation"
 	],
 	"contributes": {
 		"debuggers": [
 			{
-				"type": "retrorom-debug",
-				"label": "RetroROM Debug",
+				"type": "external-app-debug",
+				"label": "External App Debug",
 				"configurationAttributes": {
 					"launch": {
 						"required": [
@@ -65,8 +65,8 @@
 						"properties": {
 							"program": {
 								"type": "string",
-								"description": "Absolute path to a ROM file to run in the emulator.",
-								"default": "${workspaceFolder}/${command:getRomLocation}"
+								"description": "Absolute path to content to execute in an external application.",
+								"default": "${workspaceFolder}/${command:getFileLocation}"
 							},
 							"stopOnEntry": {
 								"type": "boolean",
@@ -83,39 +83,39 @@
 				},
 				"initialConfigurations": [
 					{
-						"type": "retrorom-debug",
+						"type": "external-app-debug",
 						"request": "launch",
 						"name": "Ask for file name",
-						"program": "${workspaceFolder}/${command:getRomLocation}",
+						"program": "${workspaceFolder}/${command:getFileLocation}",
 						"stopOnEntry": false
 					}
 				],
 				"configurationSnippets": [
 					{
-						"label": "RetroROM Debug: Launch",
-						"description": "Configuration for debugging a ROM in an emulator.",
+						"label": "External App Debug: Launch",
+						"description": "Configuration for debugging content in an external application.",
 						"body": {
-							"type": "retrorom-debug",
+							"type": "external-app-debug",
 							"request": "launch",
 							"name": "Ask for file name",
-							"program": "^\"\\${workspaceFolder}/\\${command:getRomLocation}\"",
+							"program": "^\"\\${workspaceFolder}/\\${command:getFileLocation}\"",
 							"stopOnEntry": false
 						}
 					}
 				],
 				"variables": {
-					"getRomLocation": "extension.retrorom-debug.getRomLocation"
+					"getFileLocation": "extension.external-app-debug.getFileLocation"
 				}
 			}
 		],
 		"configuration": [
 			{
-				"title": "RetroROM Debug",
+				"title": "External App Debug",
 				"properties": {
-					"retrorom-debug.emulatorPath": {
+					"external-app-debug.externalAppPath": {
 						"type": "string",
 						"default": "",
-						"description": "The path of the emulator to launch (either absolute, or resolved via PATH)."
+						"description": "The path of the external application to launch (either absolute, or resolved via PATH)."
 					}
 				}
 			}
