@@ -1,7 +1,7 @@
 {
 	"name": "external-app-debug",
 	"displayName": "External App Debug",
-	"version": "0.3.0",
+	"version": "0.4.0",
 	"publisher": "cyphersignal",
 	"description": "This is an extension designed to facilitate development of content that is executed inside of external applications, by providing integration with debug-protocol-aware applications.",
 	"author": {
