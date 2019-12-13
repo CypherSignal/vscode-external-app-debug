@@ -42,7 +42,7 @@
 	},
 	"devDependencies": {
 		"@types/node": "12.7.3",
-		"npm": "^6.11.2",
+		"npm": "^6.13.4",
 		"tslint": "5.19.0",
 		"typescript": "3.6.2",
 		"vsce": "1.66.0",
